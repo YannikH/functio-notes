@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { VariableTag } from "./Editor";
 
 const Background = styled.div`
   position: absolute;
-  top: 0;
+  top: 0px;
   left: 0;
   width: 100%;
   height: 100%;
@@ -20,7 +21,7 @@ position: relative;
 `;
 
 const Scroller = styled.div`
-position: relative;
+  position: relative;
   top: 0;
   left: 0;
   width: 100%;
@@ -32,27 +33,34 @@ position: relative;
 `;
 
 const Line = styled.span`
-  height: 19px;
+  position: relative;
+  min-height: 19px; 
   text-align: right;
   margin-right: 150px;
 `;
 
-type editorVariables = {[key: string]: any};
+type editorVariables = {line: number, value: string}[];
 
-const EditorOverlay = ({variables, scroll}:{variables: editorVariables, scroll: number}) => {
-  // console.log(variables)
+const EditorOverlay = ({variables, scroll, display}:{variables: editorVariables, scroll: number, display: boolean}) => {
+  if (!display) return <></>
+  console.log('rendering overlay with', variables)
   const varLines: string[] = [];
-  if (!variables.lines) variables.lines = [];
-  variables.lines.forEach(([line, value]: [line: number, value: string]) => {
+  if (!variables) return <></>
+  variables.forEach(({line, value}: {line: number, value: string}) => {
     if (varLines[line]) {
-      varLines[line] = varLines[line] + value
+      varLines[line] = varLines[line] + value + ";"
     } else {
-      varLines[line] = value
+      varLines[line] = value + "; "
     }
   })
+  varLines.shift();
   const varLinesPadded = Array.from(varLines, item => item || "")
-  // console.log(varLines, varLinesPadded)
-  const lines = varLinesPadded.map(line => <Line>{ line }</Line>)
+  console.log(varLines, varLinesPadded)
+  const lines = varLinesPadded.map(line => {
+    if (line) return <Line><VariableTag>{ line }</VariableTag></Line>
+    return <Line></Line>
+  })
+  console.log(lines)
   
   return (
     <Background>

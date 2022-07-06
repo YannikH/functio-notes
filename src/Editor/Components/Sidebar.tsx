@@ -34,7 +34,7 @@ const FileCard = ({file, openFile, setOpenFile}: {file: File, openFile: File, se
   if (isToday(lastUpdate)) {
     timestamp = `${lastUpdate.getHours()}:${lastUpdate.getMinutes()}`;
   }
-  const bgColor = (file === openFile) ? "#5a5a5a" : "rgba(0,0,0,0)"
+  const bgColor = (file.key === openFile.key) ? "#5a5a5a" : "rgba(0,0,0,0)"
   return (
     <CardBackground onClick={() => onClick()} style={{ backgroundColor: bgColor }}>
       <Typography variant="subtitle1">{file.title}</Typography>

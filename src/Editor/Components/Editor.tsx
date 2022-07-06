@@ -3,13 +3,27 @@ import Editor, { Monaco, OnMount } from "@monaco-editor/react";
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import './Editor.css';
 import { useEffect, useState } from "react";
-import { Code } from "../Util/Processor";
-import { processText } from "../Util/Processor2";
+import { processText } from "../Util/Processor";
 import { File, FileProvider } from "../Util/FileProvider";
 import EditorOverlay from "./EditorOverlay";
 import { DriveFileRenameOutline, Visibility, VerticalSplit } from "@mui/icons-material";
 import { ButtonDark } from "../Util/StyledComponents";
 import ReactMarkdown from "react-markdown";
+import styled from "styled-components";
+
+
+export const VariableTag = styled.span`
+  color: #f7f7f7;
+  background-color: #626161;
+  padding: 0px 3px;
+  border-radius: 5px;
+  border: solid 1px gray;
+  margin-right: 10px;
+`;
+export const Code = (args: any) => {
+  const text = args.children[0];
+  return (<VariableTag>{text}</VariableTag>)
+}
 
 const generateDecorations = (content: string) => {
   console.log(content)
@@ -62,7 +76,7 @@ const SplitView = ({children, displayNum, desired}: {children: React.ReactNode, 
 const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Dispatch<File[]> }) => {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor>()
   const [decorations, setDecorations] = useState<string[]>([])
-  const [varContent, setVarContent] = useState<any>({})
+  const [varContent, setVarContent] = useState<any>([])
   const [scroll, setScroll] = useState(0)
   const [viewMode, setViewMode] = useState(0)
   const [markdownContent, setMarkdownContent] = useState("")
@@ -96,7 +110,7 @@ const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Di
       <CommandBar {...{viewMode, setViewMode}}/>
       <Box style={{ display: 'flex', position: 'relative', flexGrow: '1', flexDirection: 'row', minWidth: '0', overflow: 'hidden' }}>
         <SplitView displayNum={viewMode} desired={0}>
-          <EditorOverlay variables={varContent} scroll={scroll} />
+          <EditorOverlay variables={varContent} scroll={scroll} display={viewMode === 0} />
           <Editor
             height="100%"
             theme="vs-dark"
