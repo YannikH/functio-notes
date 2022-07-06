@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useEffect } from "react";
 import styled, { isStyledComponent } from "styled-components";
-import { FileProvider, File } from "../Util/FileProvider"
+import { FileProvider, File, FileStateParams } from "../Util/FileProvider"
 import { ButtonLight } from "../Util/StyledComponents";
 import { DragDropContext } from 'react-beautiful-dnd';
 
@@ -51,24 +51,25 @@ const FileCard = ({file, openFile, setOpenFile}: {file: File, openFile: File, se
   );
 }
 
-const CreateFileButton = ({ setOpenFile }: { setOpenFile: React.Dispatch<File> }) => {
+const CreateFileButton = ({ setOpenFile, setFiles }: { setOpenFile: React.Dispatch<File>, setFiles: React.Dispatch<File[]> }) => {
   const onClick = () => {
     console.log('Create clicked')
     setOpenFile(FileProvider.CreateFile());
+    setFiles(FileProvider.GetFiles())
   }
   return (
     <ButtonLight variant="contained" style={{ flex: '0 1', margin: '0px 3px' }} onClick={() => onClick()}>New File</ButtonLight>
   );
 }
 
-const Sidebar = ({ openFile, setOpenFile, files }: { openFile: File, setOpenFile: React.Dispatch<File>, files: File[] }) => {
+const Sidebar = ({ openFile, setOpenFile, files, setFiles }: FileStateParams) => {
   useEffect(() => {
     console.log('===========files updated===========')
   }, [files])
   const fileList = files.map(file => <FileCard {...{file, setOpenFile, openFile}} />)
   return (
     <Box style={{ display: 'flex', flexDirection: 'column' }}>
-      <CreateFileButton {...{setOpenFile}} />
+      <CreateFileButton {...{setOpenFile, setFiles}} />
       { fileList }
     </Box>
   )

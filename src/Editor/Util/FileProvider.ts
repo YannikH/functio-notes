@@ -1,5 +1,8 @@
 import { get, set } from "local-storage";
 import { v4 as uuid } from 'uuid';
+import { defaultContent } from "./default";
+
+export type FileStateParams = { openFile: File, setFiles: React.Dispatch<File[]>, setOpenFile: React.Dispatch<File>, files: File[] }
 
 export type File = {
   key: string,
@@ -11,18 +14,12 @@ export type File = {
 
 const fileStore = [
   {
-    key: "asdfdfsasf",
-    title: "Test test test",
-    contentPreview: "aslkdjfadslkjffa",
-    content: "asdflkad"
+    key: "Welcome!",
+    title: "Welcome!",
+    contentPreview: "A slightly more functional notes app... in some ways.",
+    content: defaultContent.replaceAll('\n', '\r\n')
   }
 ]
-function getFormattedDate() {
-  var date = new Date();
-  var str = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate() + " " +  date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-
-  return str;
-}
 
 const extractTitle = (line: string) => {
   const replaced = line.replace('#', '')
@@ -34,13 +31,21 @@ export class FileProvider {
   public static Files: File[] = [];
   public static GetFiles(): File[] {
     const storedText = get<File[]>("notes-storage");
-    if (!storedText) {
+    if (!storedText || storedText.length === 0) {
       set("notes-storage", fileStore)
       FileProvider.Files = fileStore
+      console.log(fileStore)
       return fileStore
     }
     FileProvider.Files = fileStore
     return storedText
+  }
+  public static DeleteFile(key: string) {
+    const files = FileProvider.GetFiles();
+    const fileIndex = files.findIndex(file => file.key == key)
+    if (fileIndex > -1) files.splice(fileIndex, 1)
+    FileProvider.Files = files
+    set("notes-storage", files)
   }
   public static UpdateFile(key: string, content: string) {
     const files = FileProvider.GetFiles();

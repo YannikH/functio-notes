@@ -26,8 +26,8 @@ const EditorApp = () => {
     <Box style={{ display: 'flex', flexDirection: 'column', height: '100%', width: '100%' }}>
       <Navbar />
       <AppContent>
-        <Sidebar {...{ openFile, setOpenFile, files }}></Sidebar>
-        <EditorView {...{openFile, setFiles}}></EditorView>
+        <Sidebar {...{ openFile, setFiles, setOpenFile, files }}></Sidebar>
+        <EditorView {...{openFile, setFiles, setOpenFile, files}}></EditorView>
       </AppContent>
     </Box>
   )

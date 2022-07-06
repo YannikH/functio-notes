@@ -7,13 +7,13 @@ type Processor = {
 
 const getOperatorsBetweenDelims = (operators: string[], start: string, end: string, options = {startAhead: true, useDepth: true}): string[] => {
   const evalOperators: string[] = [];
-  console.log(operators)
+  // console.log(operators)
   if (options.startAhead) {
     if (operators[0].trim() !== start) return ["ERROR"]
     operators.shift() // get rid of the {
   }
   let nextOperator = operators.shift()
-  console.log(nextOperator)
+  // console.log(nextOperator)
   let depth = 0;
   while (nextOperator && !(nextOperator.trim() === end && (depth === 0 || !options.useDepth))) {
     const trimmedOperator = nextOperator.trim();
@@ -24,12 +24,12 @@ const getOperatorsBetweenDelims = (operators: string[], start: string, end: stri
     nextOperator = operators.shift();
     // console.log('next', (nextOperator && !(nextOperator.trim() === end && depth === 0))) 
   }
-  console.log(evalOperators)
+  // console.log(evalOperators)
   return evalOperators
 }
 
 function rawMath(fn: string) {
-  console.log('calculating', fn)
+  // console.log('calculating', fn)
   try {
     return `\`${fn} = ${new Function('return ' + fn + '')() }\``
   } catch {
@@ -94,23 +94,23 @@ const GetVar: Command = (operator: string, processor: Processor) => {
 
 const Var: Command = (operator: string, processor: Processor) => {
   const varName = getLast(processor.output)
-  console.log('setting', varName)
+  // console.log('setting', varName)
   let value = processOperators(processor);
-  console.log('evaluated value', value)
+  // console.log('evaluated value', value)
   if (value) storeVariableGlobal(varName, value, processor)
   return `${operator} ${value}`
 }
 
 const String: Command = (operator: string, processor: Processor) => {
   const evalOperators = getOperatorsBetweenDelims(processor.operators, '"', '"', {startAhead: false, useDepth: false})
-  console.log(evalOperators)
+  // console.log(evalOperators)
   const newLinesFixed = evalOperators.map(op => op.replace('<NL>', '\r\n'))
   const evalExpression = newLinesFixed.join(' ')
   return `"${evalExpression}"`
 }
 
 const Code: Command = (operator: string, processor: Processor) => {
-  console.log('code found')
+  // console.log('code found')
   const evalOperators = getOperatorsBetweenDelims(processor.operators, '`', '`', {startAhead: false, useDepth: false})
   const newLinesFixed = evalOperators.map(op => op.replace('<NL>', '\r\n'))
   const evalExpression = newLinesFixed.join(' ')
@@ -157,14 +157,14 @@ export const processText = (text: string) => {
     lineNumber: 1,
     variables: []
   }
-  console.log(operators)
+  // console.log(operators)
   while (operators.length > 0) {
     const res = processOperators(processor)
     if (res) processor.output.push(res)
   }
   const outputText = processor.output.join(' ')
   const outputLineBreaks = outputText.replaceAll(/\<NL\>/gm, '\r\n')
-  console.log(processor)
+  // console.log(processor)
   return {
     content: outputLineBreaks,
     variables: processor.variables

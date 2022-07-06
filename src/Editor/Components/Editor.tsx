@@ -4,12 +4,13 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import './Editor.css';
 import { useEffect, useState } from "react";
 import { processText } from "../Util/Processor";
-import { File, FileProvider } from "../Util/FileProvider";
+import { File, FileProvider, FileStateParams } from "../Util/FileProvider";
 import EditorOverlay from "./EditorOverlay";
 import { DriveFileRenameOutline, Visibility, VerticalSplit } from "@mui/icons-material";
 import { ButtonDark } from "../Util/StyledComponents";
 import ReactMarkdown from "react-markdown";
 import styled from "styled-components";
+import CommandBar from "./CommandBar";
 
 
 export const VariableTag = styled.span`
@@ -38,22 +39,6 @@ const decorateEditor = (editor: monaco.editor.IStandaloneCodeEditor, decorations
   )
 }
 
-const CommandBar = ({viewMode, setViewMode}: {viewMode: number, setViewMode: React.Dispatch<number>}) => {
-  return (
-    <>
-      <AppBar position="relative">
-        <Toolbar variant="dense" style={{ display: 'flex', justifyContent: 'space-between' }}>
-          Toolbar
-          <ButtonGroup variant="contained" aria-label="outlined primary button group">
-            <ButtonDark variant="contained" onClick={() => setViewMode(0)}><DriveFileRenameOutline/></ButtonDark>
-            <ButtonDark variant="contained" onClick={() => setViewMode(1)}><VerticalSplit/></ButtonDark>
-            <ButtonDark variant="contained" onClick={() => setViewMode(2)}><Visibility/></ButtonDark>
-          </ButtonGroup>
-        </Toolbar>
-      </AppBar>
-    </>
-  )
-}
 
 const SplitView = ({children, displayNum, desired}: {children: React.ReactNode, displayNum: number, desired: number}) => {
   let flexGrow = '1';
@@ -73,7 +58,7 @@ const SplitView = ({children, displayNum, desired}: {children: React.ReactNode, 
 }
 
 
-const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Dispatch<File[]> }) => {
+const EditorView = ({ openFile, setFiles, setOpenFile, files }: FileStateParams) => {
   const [editor, setEditor] = useState<monaco.editor.IStandaloneCodeEditor>()
   const [decorations, setDecorations] = useState<string[]>([])
   const [varContent, setVarContent] = useState<any>([])
@@ -87,7 +72,6 @@ const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Di
     // console.log(editor)
   }
   const onChange = (value: string) => {
-    console.log('editor change happened')
     if (editor) {
       if (value !== openFile.content) {
         console.log('content change detected')
@@ -95,21 +79,24 @@ const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Di
         setFiles(FileProvider.GetFiles())
       }
       setDecorations(decorateEditor(editor, decorations))
+      console.log('processing file')
       const { variables, content } = processText(value)
       setMarkdownContent(content)
       setVarContent(variables)
+      console.log('processed variables ', variables)
     }
   }
   useEffect(() => {
     // console.log('opening', openFile.key, openFile)
     if (editor) {
       editor.setValue(openFile.content)
+      onChange(openFile.content)
     }
     // onChange(openFile.content)
-  }, [openFile])
+  }, [openFile, editor])
   return (
     <Box style={{ height: '100%', flexGrow: '1', position: 'relative', display: 'flex', flexDirection:'column', minWidth: '0', overflow: 'hidden' }}>
-      <CommandBar {...{viewMode, setViewMode}}/>
+      <CommandBar {...{viewMode, setViewMode, openFile, setFiles, setOpenFile, files}}/>
       <Box style={{ display: 'flex', position: 'relative', flexGrow: '1', flexDirection: 'row', minWidth: '0', overflow: 'hidden' }}>
         <SplitView displayNum={viewMode} desired={0}>
           <EditorOverlay variables={varContent} scroll={scroll} display={viewMode === 0} />
