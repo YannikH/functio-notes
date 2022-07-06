@@ -2350,6 +2350,13 @@
   "resolved" "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.4.tgz"
   "version" "1.2.4"
 
+"@types/react-beautiful-dnd@^13.1.2":
+  "integrity" "sha512-+OvPkB8CdE/bGdXKyIhc/Lm2U7UAYCCJgsqmopFmh9gbAudmslkI8eOrPDjg4JhwSE6wytz4a3/wRjKtovHVJg=="
+  "resolved" "https://registry.npmjs.org/@types/react-beautiful-dnd/-/react-beautiful-dnd-13.1.2.tgz"
+  "version" "13.1.2"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^18.0.0", "@types/react-dom@^18.0.5":
   "integrity" "sha512-OWPWTUrY/NIrjsAPkAk1wW9LZeIjSvkXRhclsFO8CZcZGCOg2G0YZy4ft+rOyYxy8B7ui5iZzi9OkDebZ7/QSA=="
   "resolved" "https://registry.npmjs.org/@types/react-dom/-/react-dom-18.0.5.tgz"
@@ -2371,7 +2378,7 @@
   dependencies:
     "@types/react" "*"
 
-"@types/react@*", "@types/react@^17.0.0 || ^18.0.0", "@types/react@^18.0.12", "@types/react@>=16":
+"@types/react@*", "@types/react@^17.0.0 || ^18.0.0", "@types/react@^18.0.12", "@types/react@>=16", "@types/react@>=17 <= 18":
   "integrity" "sha512-duF1OTASSBQtcigUvhuiTB1Ya3OvSy+xORCiEf20H0P0lzx+/KeVsA99U5UjLXSbyo1DRJDlLKqTeM1ngosqtg=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-18.0.12.tgz"
   "version" "18.0.12"
@@ -7641,7 +7648,7 @@
   dependencies:
     "minimist" "^1.2.6"
 
-"monaco-editor@>= 0.21.0 < 1", "monaco-editor@>= 0.25.0 < 1":
+"monaco-editor@^0.33.0", "monaco-editor@>= 0.21.0 < 1", "monaco-editor@>= 0.25.0 < 1":
   "integrity" "sha512-VcRWPSLIUEgQJQIE0pVT8FcGBIgFoxz7jtqctE+IiCxWugD0DwgyQBcZBhdSrdMC84eumoqMZsGl2GTreOzwqw=="
   "resolved" "https://registry.npmjs.org/monaco-editor/-/monaco-editor-0.33.0.tgz"
   "version" "0.33.0"
@@ -8973,6 +8980,13 @@
     "unist-util-visit" "^4.0.0"
     "vfile" "^5.0.0"
 
+"react-monaco-editor@^0.49.0":
+  "integrity" "sha512-KZTNn1vJh1rlzIRPXjr/5HWYMPfbOoDhR+prCR7mIQCssjlkn8+SfpN4lNsiCTECo/UdpnyAdqgaIyY3yYjVeg=="
+  "resolved" "https://registry.npmjs.org/react-monaco-editor/-/react-monaco-editor-0.49.0.tgz"
+  "version" "0.49.0"
+  dependencies:
+    "prop-types" "^15.8.1"
+
 "react-refresh@^0.11.0", "react-refresh@>=0.10.0 <1.0.0":
   "integrity" "sha512-F27qZr8uUqwhWZboondsPx8tnC3Ct3SxZA3V5WyEvujRyyNv0VYPhoBg1gZ8/MV5tubQp76Trw8lTv9hzRBa+A=="
   "resolved" "https://registry.npmjs.org/react-refresh/-/react-refresh-0.11.0.tgz"
@@ -9043,7 +9057,7 @@
     "loose-envify" "^1.4.0"
     "prop-types" "^15.6.2"
 
-"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.1.0", "react@>= 16", "react@>= 16.8.0", "react@>=16", "react@>=16.6.0", "react@>=16.8.0":
+"react@^16.8.0 || ^17.0.0 || ^18.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.1.0", "react@>= 16", "react@>= 16.8.0", "react@>=16", "react@>=16.6.0", "react@>=16.8.0", "react@>=17 <= 18":
   "integrity" "sha512-4oL8ivCz5ZEPyclFQXaNksK3adutVS8l2xzZU0cqEFrE9Sb7fC0EFK5uEk74wIreL1DERyjvsU915j1pcT2uEQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.1.0.tgz"
   "version" "18.1.0"

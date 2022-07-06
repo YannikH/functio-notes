@@ -1,11 +1,12 @@
 import { Box, Button, Typography } from "@mui/material";
 import { useEffect } from "react";
-import styled from "styled-components";
+import styled, { isStyledComponent } from "styled-components";
 import { FileProvider, File } from "../Util/FileProvider"
 import { ButtonLight } from "../Util/StyledComponents";
+import { DragDropContext } from 'react-beautiful-dnd';
 
 const CardBackground = styled.div`
-  width: 200px;
+  width: 300px;
   padding: 5px 15px 5px 5px;
   /* background-color: #3c3c3c; */
   border: solid 1px #3c3c3c;
@@ -24,6 +25,10 @@ const isToday = (date: Date) => {
     date.getFullYear() == today.getFullYear()
 }
 
+const SidebarTitle = styled.h1`
+  font-size: 1em;
+`;
+
 const FileCard = ({file, openFile, setOpenFile}: {file: File, openFile: File, setOpenFile: React.Dispatch<File>}) => {
   const onClick = () => {
     console.log('opening file', file.key)
@@ -33,12 +38,15 @@ const FileCard = ({file, openFile, setOpenFile}: {file: File, openFile: File, se
   const lastUpdate = (file.lastUpdated) ? new Date(file.lastUpdated) : new Date();
   if (isToday(lastUpdate)) {
     timestamp = `${lastUpdate.getHours()}:${lastUpdate.getMinutes()}`;
+  } else {
+    timestamp = lastUpdate.toDateString()
   }
-  const bgColor = (file.key === openFile.key) ? "#5a5a5a" : "rgba(0,0,0,0)"
+  const bgColor = (file.key === openFile.key) ? "rgb(80 76 54)" : "rgba(0,0,0,0)"
+  const subtitleLine = `${timestamp} ${file.contentPreview}`
   return (
     <CardBackground onClick={() => onClick()} style={{ backgroundColor: bgColor }}>
-      <Typography variant="subtitle1">{file.title}</Typography>
-      <Typography variant="body2">{ timestamp } {file.contentPreview}</Typography>
+      <SidebarTitle>{file.title.slice(0,35)}</SidebarTitle>
+      <Typography variant="body2">{ subtitleLine.slice(0,45) }</Typography>
     </CardBackground>
   );
 }

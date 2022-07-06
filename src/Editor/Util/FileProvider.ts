@@ -24,6 +24,12 @@ function getFormattedDate() {
   return str;
 }
 
+const extractTitle = (line: string) => {
+  const replaced = line.replace('#', '')
+  console.log(line, replaced)
+  return replaced.trim()
+}
+
 export class FileProvider {
   public static Files: File[] = [];
   public static GetFiles(): File[] {
@@ -39,11 +45,12 @@ export class FileProvider {
   public static UpdateFile(key: string, content: string) {
     const files = FileProvider.GetFiles();
     const file = files.find(file => file.key == key)
+    console.log('updating file: ', key)
     if (file) {
       file.content = content
       const lines = content.split('\r\n')
       // console.log(lines)
-      if (lines[0]) file.title = lines[0]
+      if (lines[0]) file.title = extractTitle(lines[0])
       if (lines[1]) file.contentPreview = lines[1]
       file.lastUpdated = new Date().toString()
     }

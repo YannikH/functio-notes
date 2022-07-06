@@ -87,8 +87,10 @@ const EditorView = ({ openFile, setFiles }: { openFile: File, setFiles: React.Di
     // console.log(editor)
   }
   const onChange = (value: string) => {
+    console.log('editor change happened')
     if (editor) {
       if (value !== openFile.content) {
+        console.log('content change detected')
         FileProvider.UpdateFile(openFile.key, value)
         setFiles(FileProvider.GetFiles())
       }
