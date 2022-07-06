@@ -63,7 +63,7 @@ const EditorView = ({ openFile, setFiles, setOpenFile, files }: FileStateParams)
   const [decorations, setDecorations] = useState<string[]>([])
   const [varContent, setVarContent] = useState<any>([])
   const [scroll, setScroll] = useState(0)
-  const [viewMode, setViewMode] = useState(0)
+  const [viewMode, setViewMode] = useState(1)
   const [markdownContent, setMarkdownContent] = useState("")
   const editorDidMount = (editor: monaco.editor.IStandaloneCodeEditor, monaco: Monaco) => {
     console.log('Mounting editor')

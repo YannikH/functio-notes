@@ -6,6 +6,11 @@ export const ButtonDark = styled(Button)`
   color: white !important;
   border-color: #363636 !important;
 `;
+export const ButtonDarkSelected = styled(Button)`
+  background-color: #303030 !important;
+  color: white !important;
+  border-color: #363636 !important;
+`;
 export const ButtonLight = styled(Button)`
   background-color: #805e2d !important;
   color: white !important;

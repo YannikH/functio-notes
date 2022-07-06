@@ -2,8 +2,18 @@ import { DriveFileRenameOutline, VerticalSplit, Visibility, MoreVert } from "@mu
 import { AppBar, Box, ButtonGroup, IconButton, Menu, MenuItem, Toolbar } from "@mui/material"
 import React, { useState } from "react";
 import { FileProvider, FileStateParams } from "../Util/FileProvider";
-import { ButtonDark } from "../Util/StyledComponents"
+import { ButtonDark, ButtonDarkSelected } from "../Util/StyledComponents"
 
+const ViewModeButton = ({viewMode, setViewMode, assignedMode, children}: {viewMode: number, setViewMode: React.Dispatch<number>, assignedMode: number, children: React.ReactNode}) => {
+  if (viewMode === assignedMode) {
+    return (
+      <ButtonDarkSelected variant="contained" onClick={() => setViewMode(assignedMode)}>{ children }</ButtonDarkSelected>
+    )
+  }
+  return (
+    <ButtonDark variant="contained" onClick={() => setViewMode(assignedMode)}>{ children }</ButtonDark>
+  )
+}
 
 const CommandBar = ({viewMode, setViewMode, openFile, setOpenFile, setFiles}: {viewMode: number, setViewMode: React.Dispatch<number>} & FileStateParams) => {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -30,9 +40,9 @@ const CommandBar = ({viewMode, setViewMode, openFile, setOpenFile, setFiles}: {v
           Toolbar
           <Box style={{ display: 'flex' , alignItems: 'center' }}>
             <ButtonGroup variant="contained" aria-label="outlined primary button group">
-              <ButtonDark variant="contained" onClick={() => setViewMode(0)}><DriveFileRenameOutline/></ButtonDark>
-              <ButtonDark variant="contained" onClick={() => setViewMode(1)}><VerticalSplit/></ButtonDark>
-              <ButtonDark variant="contained" onClick={() => setViewMode(2)}><Visibility/></ButtonDark>
+              <ViewModeButton assignedMode={0} {...{setViewMode, viewMode}}><DriveFileRenameOutline/></ViewModeButton>
+              <ViewModeButton assignedMode={1} {...{setViewMode, viewMode}}><VerticalSplit/></ViewModeButton>
+              <ViewModeButton assignedMode={2} {...{setViewMode, viewMode}}><Visibility/></ViewModeButton>
             </ButtonGroup>
             <IconButton
               aria-label="more"
