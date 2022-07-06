@@ -24,6 +24,7 @@
     "electron-reload": "^1.5.0",
     "fs": "^0.0.1-security",
     "local-storage": "^2.0.0",
+    "monaco-editor": "^0.33.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",
     "react-markdown": "^8.0.3",
