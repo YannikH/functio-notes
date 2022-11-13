@@ -3,8 +3,9 @@ import React from "react";
 import { useState } from "react";
 import styled from "styled-components"
 import Navbar from "./Common/Navbar"
-import EditorView from "./Components/Editor";
+import EditorView from "./Components/EditorView";
 import Sidebar from "./Components/Sidebar";
+import RichEditor from "./Components/Quill";
 import { File, FileProvider } from "./Util/FileProvider"
 
 const AppContent = styled.div`
@@ -27,7 +28,8 @@ const EditorApp = () => {
       <Navbar />
       <AppContent>
         <Sidebar {...{ openFile, setFiles, setOpenFile, files }}></Sidebar>
-        <EditorView {...{openFile, setFiles, setOpenFile, files}}></EditorView>
+        {/* <EditorView {...{openFile, setFiles, setOpenFile, files}}></EditorView> */}
+        <RichEditor  {...{openFile, setFiles, setOpenFile, files}}></RichEditor>
       </AppContent>
     </Box>
   )
